@@ -45,18 +45,7 @@ Sistema de cofre digital que solicita uma senha de **4 dígitos** via teclado ma
 - Reescrita do projeto de Assembly para C (usando `reg51.h`)
 - Mascaramento de entrada (exibição de `*` em vez do dígito real)
 
-## Projeto 4: Comunicação Serial (8052 ↔ Arduino)
-
-Prática de **comunicação serial assíncrona (UART)** entre um **Arduino** (transmissor) e o **8052** (receptor). O Arduino envia a string `"SistEmb-"` caractere por caractere a cada 1 segundo. O 8052 recebe cada byte via interrupção serial (`ORG 23h`) e exibe imediatamente no LCD 16×2.
-
-### Conceitos abordados
-- Configuração da UART do 8052 em Modo 1 (8 bits, baud rate variável)
-- Uso do Timer 1 em modo Auto-Reload para geração de baud rate
-- Bit `SMOD` (dobrador de baud rate) no registrador `PCON`
-- Interrupções seriais (`ES`, `EA`, `RI`)
-- Comunicação entre plataformas diferentes (Arduino → 8052) a **9600 bps**
-
-## Projeto 5: Jogos para 8052
+## Projeto 4: Jogos para 8052
 
 Prática avançada com **três jogos** desenvolvidos em **C** para o 8052, utilizando displays LCD 16×2 e GLCD 128×64 (ST7920). Os jogos demonstram renderização gráfica, sprites customizados, detecção de colisão e progressão de dificuldade — tudo rodando em um microcontrolador de 8 bits.
 
@@ -95,6 +84,17 @@ Jogo de corrida top-down para o GLCD 128×64 onde o jogador controla um carro em
 - **Animação de crash** com sequência: explosão → ambulância se aproximando → sirene piscando
 - **Controle por teclado matricial** (teclas 7 e 9 para esquerda/direita)
 - **Restart** após colisão pressionando o botão central
+
+## Projeto 5: Comunicação Serial (8052 ↔ Arduino)
+
+Prática de **comunicação serial assíncrona (UART)** entre um **Arduino** (transmissor) e o **8052** (receptor). O Arduino envia a string `"SistEmb-"` caractere por caractere a cada 1 segundo. O 8052 recebe cada byte via interrupção serial (`ORG 23h`) e exibe imediatamente no LCD 16×2.
+
+### Conceitos abordados
+- Configuração da UART do 8052 em Modo 1 (8 bits, baud rate variável)
+- Uso do Timer 1 em modo Auto-Reload para geração de baud rate
+- Bit `SMOD` (dobrador de baud rate) no registrador `PCON`
+- Interrupções seriais (`ES`, `EA`, `RI`)
+- Comunicação entre plataformas diferentes (Arduino → 8052) a **9600 bps**
 
 ## Autores
 
