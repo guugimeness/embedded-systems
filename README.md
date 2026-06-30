@@ -9,11 +9,14 @@ embedded-systems/
 ├── blinker/          # Prática 1 — LED Blinker
 ├── lcd-keypad/       # Prática 2 — LCD 16×2 + Teclado Matricial + 7Seg-Display
 ├── safe-system/      # Prática 3 — Sistema de Cofre com Senha
-├── serial/           # Prática 4 — Comunicação Serial (8052 ↔ Arduino)
-└── games/            # Prática 5 — Jogos (T-Rex Runner & Stock Car)
+├── games/            # Prática 4 — Jogos (T-Rex Runner & Stock Car)
+├── serial/           # Prática 5 — Comunicação Serial
+├── light_pid/        # Prática 6 — Light PID
+├── rtos/             # Prática 7 — RTOS
+└── tetris/           # Projeto Final — Tetris
 ```
 
-## Projeto 1: LED Blinker
+## Prática 1: LED Blinker
 
 A primeira prática consiste em um programa clássico de pisca-LED (*blinker*), escrito em **Assembly**. O programa alterna o estado do pino `P1.0` continuamente, com um atraso gerado por dois loops aninhados usando os registradores `R0` e `R1`.
 
@@ -23,7 +26,7 @@ A primeira prática consiste em um programa clássico de pisca-LED (*blinker*), 
 - Estrutura básica de um programa Assembly 8051 (`org`, `sjmp`, `acall`, `ret`)
 - Gravação do firmware via ISP
 
-## Projeto 2: LCD 16×2 + Teclado Matricial + 7-Seg Display
+## Prática 2: LCD 16×2 + Teclado Matricial + 7-Seg Display
 
 Nesta prática, o 8052 controla um **display LCD 16×2** no modo de **4 bits** e lê entradas de um **teclado matricial 4×3**. Os caracteres digitados são exibidos no LCD em tempo real. Ao pressionar `#`, o programa encerra. Adicionalmente, um programa separado controla **4 displays de 7 segmentos** multiplexados para exibir o número `8207`.
 
@@ -34,7 +37,7 @@ Nesta prática, o 8052 controla um **display LCD 16×2** no modo de **4 bits** e
 - Debounce de tecla por software (sub-rotina `ESPSOL` com Timer 0)
 - Multiplexação de displays 7 segmentos com chip decodificador
 
-## Projeto 3: Sistema de Cofre com Senha
+## Prática 3: Sistema de Cofre com Senha
 
 Sistema de cofre digital que solicita uma senha de **4 dígitos** via teclado matricial, exibe asteriscos (`*`) no LCD conforme o usuário digita e valida a senha contra um valor armazenado. Se a senha estiver correta, exibe **"BEM VINDO"**; caso contrário, exibe **"SENHA ERRADA"**. Implementado tanto em **Assembly** quanto em **C** para o 8052.
 
@@ -45,7 +48,7 @@ Sistema de cofre digital que solicita uma senha de **4 dígitos** via teclado ma
 - Reescrita do projeto de Assembly para C (usando `reg51.h`)
 - Mascaramento de entrada (exibição de `*` em vez do dígito real)
 
-## Projeto 4: Jogos para 8052
+## Prática 4: Jogos para 8052
 
 Prática avançada com **três jogos** desenvolvidos em **C** para o 8052, utilizando displays LCD 16×2 e GLCD 128×64 (ST7920). Os jogos demonstram renderização gráfica, sprites customizados, detecção de colisão e progressão de dificuldade — tudo rodando em um microcontrolador de 8 bits.
 
@@ -85,6 +88,46 @@ Jogo de corrida top-down para o GLCD 128×64 onde o jogador controla um carro em
 - **Controle por teclado matricial** (teclas 7 e 9 para esquerda/direita)
 - **Restart** após colisão pressionando o botão central
 
-## Autores
+## Prática 5: Comunicação Serial
 
+Prática focada na comunicação UART entre o microcontrolador **8052** e um **Arduino**. O sistema demonstra o envio e recebimento de dados seriais, permitindo a integração e a transferência de comandos bidirecionais.
+
+### Conceitos abordados
+- Configuração de Baud Rate via Timer 1 no 8052
+- Registradores `SCON` e `SBUF`
+- Tratamento de interrupções seriais
+- Sincronização e tratamento de dados no lado do Arduino
+
+## Prática 6: Light PID
+
+Implementação de um controlador PID (Proporcional, Integral e Derivativo) utilizando um **Arduino** para controlar a intensidade luminosa de um LED. Um sensor LDR atua como *feedback* lendo a luminosidade do ambiente, e um display I2C (Grove RGB LCD) exibe as informações em tempo real.
+
+### Conceitos abordados
+- Malha de controle fechada (Closed-loop)
+- Sintonia empírica de ganhos Kp, Ki e Kd
+- Leitura analógica (ADC) do sensor LDR e controle de potência via PWM
+- Utilização da biblioteca `PID_v1` no ecossistema do Arduino
+
+## Prática 7: RTOS (Cálculo de Pi)
+
+Introdução a Sistemas Operacionais de Tempo Real utilizando a biblioteca **FreeRTOS** no Arduino. A prática demonstra a execução concorrente de tarefas, calculando o valor de Pi (π) interativamente através do método de **Monte Carlo**.
+
+### Conceitos abordados
+- Criação de tarefas concorrentes (`xTaskCreate`) com diferentes prioridades
+- Preempção e escalonamento de tarefas (TaskCalc e TaskPrint)
+- Algoritmo de Monte Carlo para aproximação de Pi
+- Cedência de controle de processamento (`vTaskDelay`) e escopo de variáveis globais
+
+## Projeto Final: Tetris Arcade (Bare-Metal ARM)
+
+Projeto final da disciplina consistindo em um **clone completo do Tetris** desenvolvido em **C (Bare-Metal)** para a placa **Terasic DE10-Standard (SoCFPGA Cyclone V com ARM Cortex-A9)**. O jogo roda diretamente no hardware sem nenhum Sistema Operacional embarcado, acessando diretamente os controladores de vídeo e os botões.
+
+### Mecânicas e Conceitos abordados
+- **Renderização Gráfica via VGA**: Controle do buffer de vídeo (resolução 320x240, 16-bit RGB565) a partir do mapeamento de memória base do SoC.
+- **Primitivas de Renderização Customizadas**: Funções desenhadas do zero para renderizar pixels, retângulos, linhas e textos char-a-char na tela.
+- **Lógica e Física do Tetris**: Detecção de colisão via grid, rotação dos tetrominós em suas matrizes, animação de queda, e detecção/limpeza de linhas concluídas.
+- **Máquina de Estados de Jogo**: Separação clara entre Menu Inicial, Loop de Jogo, e Tela de Game Over.
+- **Polling de Botões Nativos**: Leitura contínua dos registradores dos botões da placa (KEY0 a KEY3) para navegação, rotação e queda livre (drop).
+
+## Autores
 Desenvolvido por Gustavo de Oliveira Gimenes e Vinícius Marto da Veiga.

@@ -1,0 +1,13 @@
+# C/C++ build outputs
+*.o
+*.obj
+*.lst
+*.map
+*.m51
+*.lnp
+*.hex
+*.omf
+*.out
+*.bin
+*.srec
+*.axf*
