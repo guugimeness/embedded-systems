@@ -90,13 +90,14 @@ Jogo de corrida top-down para o GLCD 128×64 onde o jogador controla um carro em
 
 ## Prática 5: Comunicação Serial
 
-Prática focada na comunicação UART entre o microcontrolador **8052** e um **Arduino**. O sistema demonstra o envio e recebimento de dados seriais, permitindo a integração e a transferência de comandos bidirecionais.
+Prática focada na comunicação UART entre o microcontrolador **8052** e um **Arduino**. O projeto consiste no Arduino enviando caracteres (uma string) via serial para o 8052. O 8052, programado em **Assembly**, recebe esses dados por meio de interrupções seriais e os exibe em um display **LCD 16x2** em tempo real.
 
 ### Conceitos abordados
-- Configuração de Baud Rate via Timer 1 no 8052
+- Configuração de Baud Rate exato (8928 bps) via Timer 1 e bit SMOD no 8052
 - Registradores `SCON` e `SBUF`
-- Tratamento de interrupções seriais
-- Sincronização e tratamento de dados no lado do Arduino
+- Tratamento de interrupção de recepção serial (`RI`, vetor `23h`)
+- Interface com Display LCD em Assembly
+- Sincronização de taxa de transmissão (Baud Rate não-padrão) no lado do Arduino
 
 ## Prática 6: Light PID
 
